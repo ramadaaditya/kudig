@@ -12,9 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -27,13 +25,12 @@ import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-
-import com.kudig.kwitansidigital.KwitansiAdapter;
-import com.kudig.kwitansidigital.KwitansiDAO;
-import com.kudig.kwitansidigital.KwitansiDB;
-import com.kudig.kwitansidigital.KwitansiEntity;
 import com.kudig.kwitansidigital.R;
 import com.kudig.kwitansidigital.databinding.FragmentHomeBinding;
+import com.kudig.kwitansidigital.db.KwitansiDAO;
+import com.kudig.kwitansidigital.db.KwitansiDB;
+import com.kudig.kwitansidigital.db.KwitansiEntity;
+import com.kudig.kwitansidigital.ui.adapter.KwitansiAdapter;
 import com.opencsv.CSVReader;
 
 import java.io.File;
@@ -54,8 +51,6 @@ public class HomeFragment extends Fragment {
     KwitansiDAO kwitansiDAO;
     RecyclerView myRecycler;
     KwitansiAdapter kwitansiAdapter;
-
-//    private AdView mAdView;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -102,17 +97,6 @@ public class HomeFragment extends Fragment {
                 swipeRefreshLayout.setRefreshing(false);
             }
         });
-
-//        MobileAds.initialize(requireContext(), new OnInitializationCompleteListener() {
-//            @Override
-//            public void onInitializationComplete(InitializationStatus initializationStatus) {
-//            }
-//        });
-//
-//        mAdView = root.findViewById(R.id.adView);
-//        AdRequest adRequest = new AdRequest.Builder().build();
-//        mAdView.loadAd(adRequest);
-
         return root;
 
     }
@@ -169,7 +153,7 @@ public class HomeFragment extends Fragment {
 
                     KwitansiDB db = Room.databaseBuilder(getContext(), KwitansiDB.class, "KwitansiDB").allowMainThreadQueries().build();
                     KwitansiDAO kwitansiDAO = db.getKwitansiDAO();
-                    kwitansiDAO.addKwitansi(new KwitansiEntity(nomor,nama, nama_penerima, nominal, deskripsi));
+                    kwitansiDAO.addKwitansi(new KwitansiEntity(nomor, nama, nama_penerima, nominal, deskripsi));
                 }
                 Toast.makeText(getContext(), "Backup Restored", Toast.LENGTH_SHORT).show();
             } catch (Exception e) {
@@ -241,29 +225,23 @@ public class HomeFragment extends Fragment {
         ExecutorService executorService = Executors.newSingleThreadExecutor();
         Handler handler = new Handler(Looper.getMainLooper());
 
-        executorService.execute(new Runnable() {
-            @Override
-            public void run() {
-                List<KwitansiEntity> kwitansiList = kwitansiDAO.getAllKwitansi();
+        executorService.execute(() -> {
+            List<KwitansiEntity> kwitansiList = kwitansiDAO.getAllKwitansi();
 
-                handler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        kwitansiAdapter.clear();
+            handler.post(() -> {
+                kwitansiAdapter.clear();
 
-                        for (KwitansiEntity kwitansi : kwitansiList) {
-                            kwitansiAdapter.addKwitansi(kwitansi);
-                        }
+                for (KwitansiEntity kwitansi : kwitansiList) {
+                    kwitansiAdapter.addKwitansi(kwitansi);
+                }
 
-                        if (kwitansiList.isEmpty()) {
-                            binding.emptyTextView.setVisibility(View.VISIBLE);
-                        } else {
-                            binding.emptyTextView.setVisibility(View.GONE);
-                        }
-                        swipeRefreshLayout.setRefreshing(false);
-                    }
-                });
-            }
+                if (kwitansiList.isEmpty()) {
+                    binding.emptyTextView.setVisibility(View.VISIBLE);
+                } else {
+                    binding.emptyTextView.setVisibility(View.GONE);
+                }
+                swipeRefreshLayout.setRefreshing(false);
+            });
         });
 
 

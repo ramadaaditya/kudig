@@ -1,247 +1,194 @@
 package com.kudig.kwitansidigital.ui.device;
 
+import android.Manifest;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
-import android.bluetooth.BluetoothSocket;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
 import com.kudig.kwitansidigital.R;
+import com.kudig.kwitansidigital.databinding.FragmentDeviceBluetoothBinding;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-import java.util.UUID;
 
 public class DeviceBluetoothFragment extends Fragment {
-
-    private BluetoothAdapter bluetoothAdapter;
-    private List<BluetoothDevice> deviceList;
+    private FragmentDeviceBluetoothBinding binding;
+    private DeviceBluetoothViewModel viewModel;
+    private ArrayList<BluetoothDevice> deviceList;
     private ArrayAdapter<BluetoothDevice> adapter;
+    private ActivityResultLauncher<String[]> requestBluetoothPermissionsLauncher;
 
-    private static final String ACTION_PAIRING_REQUEST = "android.bluetooth.device.action.PAIRING_REQUEST";
-    private static final String ACTION_BOND_STATE_CHANGED = "android.bluetooth.device.action.BOND_STATE_CHANGED";
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        requestBluetoothPermissionsLauncher = registerForActivityResult(
+                new ActivityResultContracts.RequestMultiplePermissions(),
+                permissions -> {
+                    boolean granted;
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                        granted = Boolean.TRUE.equals(permissions.getOrDefault(Manifest.permission.BLUETOOTH_SCAN, false)) &&
+                                Boolean.TRUE.equals(permissions.getOrDefault(Manifest.permission.BLUETOOTH_CONNECT, false));
+                    } else {
+                        granted = ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED;
+                    }
+
+                    if (granted) {
+                        viewModel.startBluetoothScan();
+                    } else {
+                        Toast.makeText(requireContext(), "Izin Bluetooth diperlukan untuk fungsionalitas ini. ", Toast.LENGTH_LONG).show();
+                    }
+                }
+        );
+    }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_device_bluetooth, container, false);
+        // Menggunakan View Binding untuk meng-inflate layout
+        binding = FragmentDeviceBluetoothBinding.inflate(inflater, container, false);
+        View view = binding.getRoot();
 
-        bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-        deviceList = new ArrayList<>();
+        // Inisialisasi ViewModel
+        viewModel = new ViewModelProvider(this).get(DeviceBluetoothViewModel.class);
 
-        ListView listView = view.findViewById(R.id.device_list);
-        adapter = new ArrayAdapter<BluetoothDevice>(requireContext(), android.R.layout.simple_list_item_1, deviceList) {
+        deviceList = new ArrayList<>(); // Inisialisasi daftar perangkat
+
+        // Mengatur ArrayAdapter untuk ListView
+        adapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_list_item_1, deviceList) {
             @NonNull
             @Override
             public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
                 View view = super.getView(position, convertView, parent);
                 TextView textView = view.findViewById(android.R.id.text1);
                 BluetoothDevice device = deviceList.get(position);
-                String deviceName = device.getName();
-                textView.setText(deviceName != null ? deviceName : device.getAddress());
+                String deviceDisplay; // Default value jika terjadi SecurityException
+                try {
+                    // Akses nama perangkat, memerlukan izin BLUETOOTH_CONNECT
+                    String deviceName = device.getName();
+                    deviceDisplay = (deviceName != null && !deviceName.isEmpty()) ? deviceName : device.getAddress();
+                } catch (SecurityException e) {
+                    // Tangani SecurityException jika izin BLUETOOTH_CONNECT tidak diberikan
+                    // Tampilkan alamat perangkat sebagai fallback atau pesan error
+                    deviceDisplay = device.getAddress() != null ? device.getAddress() + " (Izin Ditolak)" : "Perangkat Tidak Dikenal";
+                    Toast.makeText(requireContext(), "Tidak dapat menampilkan nama perangkat: Izin Bluetooth ditolak.", Toast.LENGTH_SHORT).show();
+                }
+                textView.setText(deviceDisplay);
                 return view;
             }
         };
-        listView.setAdapter(adapter);
+        binding.deviceList.setAdapter(adapter); // Menggunakan binding untuk mengakses ListView
 
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                BluetoothDevice selectedDevice = deviceList.get(position);
-                // Pair perangkat yang dipilih
-                pairDevice(selectedDevice);
+        // Mengatur OnItemClickListener untuk ListView
+        binding.deviceList.setOnItemClickListener((parent, view1, position, id) -> {
+            BluetoothDevice selectedDevice = deviceList.get(position);
+            // Memicu permintaan pairing melalui ViewModel
+            viewModel.pairDevice(selectedDevice);
+        });
+
+        // --- Observasi LiveData dari ViewModel ---
+
+        // Mengamati daftar perangkat yang ditemukan dari ViewModel
+        viewModel.getDiscoveredDevices().observe(getViewLifecycleOwner(), devices -> {
+            deviceList.clear();
+            deviceList.addAll(devices);
+            adapter.notifyDataSetChanged(); // Memperbarui tampilan daftar
+        });
+
+        // Mengamati status Bluetooth (aktif/tidak) dari ViewModel
+        viewModel.getBluetoothEnabledStatus().observe(getViewLifecycleOwner(), isEnabled -> {
+            if (!isEnabled) {
+                // Jika Bluetooth tidak aktif, tampilkan pesan dan minta untuk mengaktifkannya
+                Toast.makeText(requireContext(), "Bluetooth tidak aktif. Mohon aktifkan.", Toast.LENGTH_LONG).show();
+                // Opsional: Buka pengaturan Bluetooth secara otomatis
+                Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+                startActivity(enableBtIntent);
             }
         });
+
+        // Mengamati status pairing dari ViewModel
+        viewModel.getPairingStatus().observe(getViewLifecycleOwner(), status -> {
+            if (status.equals("BONDED")) {
+                Toast.makeText(requireContext(), "Perangkat Berhasil Tersambung", Toast.LENGTH_SHORT).show();
+                // Navigasi kembali setelah berhasil pairing
+                if (requireActivity() != null) {
+                    NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_activity_main); // Sesuaikan ID nav_host_fragment Anda
+                    navController.popBackStack();
+                }
+            } else if (status.equals("NONE")) {
+                Toast.makeText(requireContext(), "Pairing Gagal", Toast.LENGTH_SHORT).show();
+            } else if (status.equals("PAIRING")) {
+                Toast.makeText(requireContext(), "Sedang mencoba pairing...", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        // Mengamati pesan error dari ViewModel
+        viewModel.getErrorMessage().observe(getViewLifecycleOwner(), message -> {
+            if (message != null && !message.isEmpty()) {
+                Toast.makeText(requireContext(), message, Toast.LENGTH_LONG).show();
+            }
+        });
+
         return view;
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-        // Lakukan pemindaian perangkat Bluetooth saat fragment ditampilkan
-        scanDevices();
-    }
-
-    private void scanDevices() {
-        deviceList.clear();
-        if (bluetoothAdapter.isDiscovering()) {
-            bluetoothAdapter.cancelDiscovery();
-        }
-        bluetoothAdapter.startDiscovery();
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        // Hentikan pemindaian perangkat Bluetooth saat fragment tidak aktif
-        bluetoothAdapter.cancelDiscovery();
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        // Hentikan pemindaian perangkat Bluetooth saat fragment dihancurkan
-        bluetoothAdapter.cancelDiscovery();
-    }
-
-    private final BroadcastReceiver bluetoothReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            String action = intent.getAction();
-            if (BluetoothDevice.ACTION_FOUND.equals(action)) {
-                BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
-                if (device != null && !deviceList.contains(device)) {
-                    deviceList.add(device);
-                    adapter.notifyDataSetChanged(); // Menyampaikan perubahan ke adapter untuk memperbarui tampilan ListView
-                }
-            } else if (ACTION_PAIRING_REQUEST.equals(action)) {
-                // Proses pairing dimulai
-                // ...
-            } else if (ACTION_BOND_STATE_CHANGED.equals(action)) {
-                // Proses pairing selesai atau gagal
-                BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
-                int bondState = intent.getIntExtra(BluetoothDevice.EXTRA_BOND_STATE, BluetoothDevice.ERROR);
-
-                if (bondState == BluetoothDevice.BOND_BONDED) {
-                    // Pairing berhasil, kembali ke FragmentPreview
-                    FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
-                    fragmentManager.popBackStack();
-                    Toast.makeText(context, "Perangkat Berhasil Tersambung", Toast.LENGTH_SHORT).show();
-                } else if (bondState == BluetoothDevice.BOND_NONE) {
-                    // Pairing gagal, tambahkan penanganan sesuai kebutuhan
-                }
-            }
-        }
-    };
-
-    @Override
     public void onStart() {
         super.onStart();
-        // Daftarkan penerima siaran untuk menerima hasil pemindaian perangkat Bluetooth
-        IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
-        filter.addAction(ACTION_PAIRING_REQUEST);
-        filter.addAction(ACTION_BOND_STATE_CHANGED);
-        requireContext().registerReceiver(bluetoothReceiver, filter);
+        checkAndRequestBluetoothPermissions();
+        viewModel.startBluetoothManagement();
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        // Hapus penerima siaran saat fragment tidak aktif
-        requireContext().unregisterReceiver(bluetoothReceiver);
+        viewModel.stopBluetoothManagement();
     }
 
-    private void pairDevice(BluetoothDevice device) {
-        try {
-            Method method = device.getClass().getMethod("createBond", (Class[]) null);
-            method.invoke(device, (Object[]) null);
-            // Setelah perangkat terhubung, panggil metode untuk mendapatkan informasi printer
-            getPrinterInformation(device);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 
-    private void getPrinterInformation(BluetoothDevice device) {
-        if (device.getBondState() == BluetoothDevice.BOND_BONDED) {
-        }
-    }
-
-    private String getPrinterWidthMM(BluetoothDevice device) {
-        String printerWidthMM = "";
-
-        // Mendapatkan UUID dari servis printer Bluetooth
-        UUID printerServiceUUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
-
-        try {
-            // Membuat socket Bluetooth
-            BluetoothSocket socket = device.createRfcommSocketToServiceRecord(printerServiceUUID);
-
-            // Menghubungkan socket Bluetooth
-            socket.connect();
-
-            // Mengirim perintah ke printer untuk mendapatkan lebar
-            OutputStream outputStream = socket.getOutputStream();
-            outputStream.write(new byte[]{27, 87});
-            outputStream.flush();
-
-            // Menerima respons dari printer
-            InputStream inputStream = socket.getInputStream();
-            byte[] buffer = new byte[64];
-            int bytesRead = inputStream.read(buffer);
-
-            // Mengambil lebar dari respons
-            if (bytesRead > 0) {
-                printerWidthMM = new String(buffer, 0, bytesRead).trim();
+    // Metode untuk memeriksa dan meminta izin Bluetooth
+    private void checkAndRequestBluetoothPermissions() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            // Untuk Android 12 (API 31) dan yang lebih baru
+            if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.BLUETOOTH_SCAN) != PackageManager.PERMISSION_GRANTED ||
+                    ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED) {
+                requestBluetoothPermissionsLauncher.launch(new String[]{
+                        Manifest.permission.BLUETOOTH_SCAN,
+                        Manifest.permission.BLUETOOTH_CONNECT
+                });
+            } else {
+                // Izin sudah ada, mulai pemindaian
+                viewModel.startBluetoothScan();
             }
-
-            // Menutup koneksi socket Bluetooth
-            socket.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return printerWidthMM;
-    }
-
-    private int getPrinterDpi(BluetoothDevice device) {
-        int printerDpi = 0;
-
-        // Mendapatkan UUID dari servis printer Bluetooth
-        UUID printerServiceUUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
-
-        try {
-            // Membuat socket Bluetooth
-            BluetoothSocket socket = device.createRfcommSocketToServiceRecord(printerServiceUUID);
-
-            // Menghubungkan socket Bluetooth
-            socket.connect();
-
-            // Mengirim perintah ke printer untuk mendapatkan DPI
-            OutputStream outputStream = socket.getOutputStream();
-            outputStream.write(new byte[]{27, 99});
-            outputStream.flush();
-
-            // Menerima respons dari printer
-            InputStream inputStream = socket.getInputStream();
-            byte[] buffer = new byte[64];
-            int bytesRead = inputStream.read(buffer);
-
-            // Mengambil DPI dari respons
-            if (bytesRead > 0) {
-                printerDpi = Integer.parseInt(new String(buffer, 0, bytesRead).trim());
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            // Untuk Android 6 (API 23) hingga 11 (API 30)
+            if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                requestBluetoothPermissionsLauncher.launch(new String[]{Manifest.permission.ACCESS_FINE_LOCATION});
+            } else {
+                // Izin sudah ada, mulai pemindaian
+                viewModel.startBluetoothScan();
             }
-
-            // Menutup koneksi socket Bluetooth
-            socket.close();
-        } catch (IOException e) {
-            e.printStackTrace();
+        } else {
+            // Untuk Android di bawah Marshmallow (API 23), izin dianggap sudah diberikan di manifest.
+            // Langsung mulai pemindaian.
+            viewModel.startBluetoothScan();
         }
-
-        return printerDpi;
     }
-
-
-
 }

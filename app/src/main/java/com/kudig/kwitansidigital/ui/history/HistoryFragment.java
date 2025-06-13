@@ -4,8 +4,6 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -23,21 +21,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.kudig.kwitansidigital.HistoryAdapter;
-import com.kudig.kwitansidigital.HistoryDAO;
-import com.kudig.kwitansidigital.HistoryEntity;
-import com.kudig.kwitansidigital.KwitansiAdapter;
-import com.kudig.kwitansidigital.KwitansiDAO;
-import com.kudig.kwitansidigital.KwitansiDB;
-import com.kudig.kwitansidigital.KwitansiEntity;
+import com.kudig.kwitansidigital.ui.adapter.HistoryAdapter;
+import com.kudig.kwitansidigital.db.HistoryDAO;
+import com.kudig.kwitansidigital.db.HistoryEntity;
+import com.kudig.kwitansidigital.db.KwitansiDB;
 import com.kudig.kwitansidigital.R;
 import com.kudig.kwitansidigital.databinding.FragmentHomeBinding;
-import com.kudig.kwitansidigital.ui.add.AddFragment;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 public class HistoryFragment extends Fragment {
     private FragmentHomeBinding binding;

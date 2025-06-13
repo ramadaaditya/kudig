@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
     android:layout_marginBottom="?actionBarSize"
+    android:gravity="center"
     tools:context=".ui.add.AddFragment">
 
     <TextView
@@ -16,100 +15,98 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:textAlignment="center"
-        android:textSize="24sp"/>
-
+        android:textSize="24sp" />
 
     <LinearLayout
+        android:id="@+id/layout_input_data"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="25sp"
         android:layout_marginRight="25sp"
-        android:id="@+id/layout_input_data"
-        android:orientation="vertical"
         android:gravity="center_horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:orientation="vertical">
 
         <LinearLayout
             android:id="@+id/input_nama_pengirim"
             android:layout_width="match_parent"
-            android:orientation="vertical"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16sp"
-                android:text="KWITANSI"
+                android:text="@string/kwitansi"
                 android:textAlignment="center"
                 android:textColor="@color/black"
-                android:textStyle="bold"
-                android:textSize="20sp"></TextView>
+                android:textSize="20sp"
+                android:textStyle="bold" />
 
             <EditText
-                android:visibility="gone"
-                android:hint="ID"
                 android:id="@+id/input_id"
-                android:textSize="16sp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:enabled="false"
+                android:hint="@string/id"
                 android:inputType="text"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-            </EditText>
+                android:textSize="16sp"
+                android:minHeight="48dp"
+                android:visibility="gone"
+                tools:visibility="visible" />
 
             <EditText
-                android:hint="Terima Dari"
                 android:id="@+id/input_nama_terimadari"
-                android:textSize="16sp"
-                android:inputType="text"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-            </EditText>
+                android:layout_height="wrap_content"
+                android:hint="@string/terima_dari"
+                android:inputType="text"
+                android:minHeight="48dp"
+                android:textSize="16sp" />
 
             <EditText
-                android:hint="Penerima"
                 android:id="@+id/input_nama_penerima"
-                android:textSize="16sp"
-                android:inputType="text"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-            </EditText>
+                android:layout_height="wrap_content"
+                android:hint="@string/penerima"
+                android:inputType="text"
+                android:minHeight="48dp"
+                android:textSize="16sp" />
         </LinearLayout>
-
 
         <LinearLayout
             android:id="@+id/input_banyak_uang"
-            android:layout_marginTop="5sp"
             android:layout_width="match_parent"
-            android:orientation="vertical"
-            android:layout_height="wrap_content">
-
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5sp"
+            android:orientation="vertical">
 
             <EditText
-                android:hint="Nominal Uang"
                 android:id="@+id/input_nominal"
-                android:textSize="16sp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/nominal_uang"
                 android:inputType="number"
                 android:maxLength="12"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-            </EditText>
+                android:minHeight="48dp"
+                android:textSize="16sp" />
         </LinearLayout>
-
 
         <LinearLayout
             android:id="@+id/input_tujuan_pembayaran"
-            android:layout_marginTop="5sp"
             android:layout_width="match_parent"
-            android:orientation="vertical"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5sp"
+            android:orientation="vertical">
 
             <EditText
-                android:hint="Untuk Pembayaran"
                 android:id="@+id/input_deskripsi"
-                android:textSize="16sp"
-                android:inputType="textMultiLine"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-            </EditText>
+                android:layout_height="wrap_content"
+                android:autofillHints="name"
+                android:hint="@string/untuk_pembayaran"
+                android:inputType="textMultiLine"
+                android:minHeight="48dp"
+                android:textSize="16sp" />
         </LinearLayout>
 
         <Button
@@ -117,13 +114,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="25sp"
-            android:text="Buat"
-            android:textStyle="bold"
-            android:textSize="16sp"></Button>
-
-
-
-
+            android:text="@string/buat"
+            android:textSize="16sp"
+            android:textStyle="bold" />
     </LinearLayout>
-
 </RelativeLayout>

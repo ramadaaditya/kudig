@@ -37,4 +37,22 @@ Kami dapat memperbarui kebijakan privasi ini dari waktu ke waktu. Versi terbaru 
 Jika Anda memiliki pertanyaan atau masalah terkait dengan kebijakan privasi ini atau penggunaan informasi pribadi Anda, Anda dapat menghubungi kami melalui alamat email [alamat email kontak] atau melalui [kontak lain yang relevan].\n
 
 Terima kasih telah menggunakan Aplikasi Kwitansi Digital.\n\n\n\n\n</string>
+    <string name="nominal">Nominal</string>
+    <string name="untuk_pembayaran">Untuk Pembayaran</string>
+    <string name="penerima">Penerima</string>
+    <string name="nama_penerima">Nama Penerima</string>
+    <string name="terima_dari">Terima Dari</string>
+    <string name="nama_pengirim">Nama Pengirim</string>
+    <string name="developer">Developer</string>
+    <string name="febrian_avien_wibowo">Febrian Avien Wibowo</string>
+    <string name="rahman_wahyu_aji">Rahman Wahyu Aji</string>
+    <string name="tambah_kwitansi">Tambah Kwitansi</string>
+    <string name="splash_screen">Splash Screen</string>
+    <string name="buat">Buat</string>
+    <string name="kwitansi">KWITANSI</string>
+    <string name="id">ID</string>
+    <string name="nominal_uang">Nominal Uang</string>
+    <string name="list">List</string>
+    <string name="history">History</string>
+    <string name="list_history_kosong">List history Kosong</string>
 </resources>

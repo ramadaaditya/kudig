@@ -25,7 +25,7 @@
             android:name=".MainActivity"
             android:exported="false" />
         <activity
-            android:name=".item_history"
+            android:name=".ui.history.item_history"
             android:exported="false" />
         <activity
             android:name=".view_design"
