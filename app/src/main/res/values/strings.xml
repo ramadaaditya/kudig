@@ -1,0 +1,40 @@
+<resources>
+    <string name="app_name">Kwitansi Digital</string>
+    <string name="Watermark">Printed By Kwitansi Digital</string>
+    <string name="title_home">List Kwitansi</string>
+    <string name="title_dashboard">Add</string>
+    <string name="title_about">About</string>
+
+    <string name="Privacy_Police">
+Aplikasi Kwitansi Digital\n
+Versi 1.0\n
+Terakhir diperbarui pada 14 Juni 2023\n
+        Kami, pengembang dan pemilik Aplikasi Kwitansi Digital, menghargai privasi Anda sebagai pengguna aplikasi ini. Dokumen kebijakan privasi ini menjelaskan bagaimana kami mengumpulkan, menggunakan, dan melindungi informasi pribadi Anda dalam hubungannya dengan penggunaan aplikasi ini. Kami mendorong Anda untuk membaca kebijakan privasi ini secara menyeluruh untuk memahami bagaimana data pribadi Anda akan ditangani.\n
+1. Informasi yang Kami Kumpulkan
+  Kami mengumpulkan informasi pribadi yang Anda berikan kepada kami saat menggunakan aplikasi Kwitansi Digital. Informasi yang kami kumpulkan meliputi:\n
+- Nama lengkap: Digunakan untuk mengidentifikasi pemilik akun.
+- Akses Bluetooth: Digunakan untuk memungkinkan aplikasi terhubung dengan perangkat Bluetooth yang diperlukan untuk fitur-fitur tertentu,seperti mencetak atau berbagi data melalui Bluetooth.
+- Akses Galeri: Digunakan untuk mengambil gambar atau dokumen terkait kwitansi dari galeri perangkat Anda.
+- Akses Penyimpanan: Digunakan untuk menyimpan dan mengelola data kwitansi yang Anda buat dalam penyimpanan perangkat Anda.
+- Akses Lokasi: Digunakan untuk memberikan fitur yang berkaitan dengan lokasi, seperti menambahkan informasi lokasi pada kwitansi atau mencari penjual terdekat.\n
+2. Penggunaan Informasi
+  Informasi pribadi yang kami kumpulkan akan digunakan untuk tujuan berikut:
+- Mengoperasikan, mengelola, dan meningkatkan aplikasi Kwitansi Digital.
+- Menyesuaikan pengalaman pengguna dan memberikan fitur-fitur yang relevan dengan kebutuhan Anda.
+- Menghubungi Anda jika diperlukan dalam konteks penggunaan aplikasi ini.
+- Menganalisis penggunaan aplikasi untuk keperluan statistik dan pengembangan produk.\n
+3. Keamanan Informasi
+Kami mengambil langkah-langkah yang wajar untuk melindungi informasi pribadi Anda dari akses yang tidak sah, penggunaan, atau pengungkapan yang tidak sah. Kami menggunakan tindakan keamanan teknis dan administratif yang sesuai untuk melindungi data Anda. Namun, perlu diingat bahwa tidak ada metode pengiriman data atau penyimpanan elektronik yang sepenuhnya aman. Oleh karena itu, kami tidak dapat menjamin keamanan mutlak dari informasi yang Anda berikan atau terkait dengan penggunaan aplikasi ini.\n
+4. Pengungkapan kepada Pihak Ketiga
+Kami tidak akan mengungkapkan informasi pribadi Anda kepada pihak ketiga tanpa persetujuan Anda, kecuali jika diperlukan oleh hukum atau ketentuan peraturan yang berlaku.\n
+5. Retensi Informasi
+Kami akan menyimpan informasi pribadi Anda selama diperlukan untuk tujuan penggunaan aplikasi ini dan untuk mematuhi kewajiban hukum yang berlaku.\n
+6. Hak Anda
+Anda memiliki hak untuk mengakses, memperbaiki, menghapus, dan membatasi pengolahan informasi pribadi Anda sesuai dengan ketentuan hukum yang berlaku. Jika Anda ingin menggunakan hak-hak ini atau memiliki pertanyaan lebih lanjut tentang kebijakan privasi kami, Anda dapat menghubungi kami melalui informasi kontak yang tercantum di bawah ini.\n
+7. Perubahan pada Kebijakan Privasi
+Kami dapat memperbarui kebijakan privasi ini dari waktu ke waktu. Versi terbaru dari kebijakan privasi akan diterbitkan di aplikasi Kwitansi Digital dan berlaku sejak tanggal pembaruan tersebut. Kami menyarankan Anda untuk secara berkala memeriksa kebijakan privasi ini untuk tetap mendapatkan pemahaman yang akurat tentang bagaimana informasi pribadi Anda digunakan.\n
+8. Informasi Kontak
+Jika Anda memiliki pertanyaan atau masalah terkait dengan kebijakan privasi ini atau penggunaan informasi pribadi Anda, Anda dapat menghubungi kami melalui alamat email [alamat email kontak] atau melalui [kontak lain yang relevan].\n
+
+Terima kasih telah menggunakan Aplikasi Kwitansi Digital.\n\n\n\n\n</string>
+</resources>

@@ -1,0 +1,126 @@
+{
+  "project_info": {
+    "project_number": "500501279717",
+    "project_id": "tumbal-be334",
+    "storage_bucket": "tumbal-be334.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:500501279717:android:d44dcc3c90235a6bf6f50c",
+        "android_client_info": {
+          "package_name": "com.kudig.kwitansidigital"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "500501279717-r4j3di9eco1u4e9aqtle31nvat2hdgf4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDpZ0H1mK5SCtwFKum6AyWph91B4i-QN0s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "500501279717-r4j3di9eco1u4e9aqtle31nvat2hdgf4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:500501279717:android:c1ca05b34135027af6f50c",
+        "android_client_info": {
+          "package_name": "com.rwa.tumbalads"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "500501279717-r4j3di9eco1u4e9aqtle31nvat2hdgf4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDpZ0H1mK5SCtwFKum6AyWph91B4i-QN0s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "500501279717-r4j3di9eco1u4e9aqtle31nvat2hdgf4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:500501279717:android:da47215430f91cf5f6f50c",
+        "android_client_info": {
+          "package_name": "tumbal.if21f.tumbal"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "500501279717-r4j3di9eco1u4e9aqtle31nvat2hdgf4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDpZ0H1mK5SCtwFKum6AyWph91B4i-QN0s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "500501279717-r4j3di9eco1u4e9aqtle31nvat2hdgf4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:500501279717:android:099debcc1eaef0b9f6f50c",
+        "android_client_info": {
+          "package_name": "tumbal.if21f.tumbal2"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "500501279717-r4j3di9eco1u4e9aqtle31nvat2hdgf4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDpZ0H1mK5SCtwFKum6AyWph91B4i-QN0s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "500501279717-r4j3di9eco1u4e9aqtle31nvat2hdgf4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

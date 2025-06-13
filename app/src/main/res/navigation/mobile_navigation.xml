@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigation_add">
+
+    <fragment
+        android:id="@+id/navigation_home"
+        android:name="com.kudig.kwitansidigital.ui.home.HomeFragment"
+        android:label="@string/title_home"
+        tools:layout="@layout/fragment_home" />
+
+    <fragment
+        android:id="@+id/navigation_add"
+        android:name="com.kudig.kwitansidigital.ui.add.AddFragment"
+        android:label="Buat Kwitansi"
+        tools:layout="@layout/fragment_add" />
+
+    <fragment
+        android:id="@+id/navigation_about"
+        android:name="com.kudig.kwitansidigital.ui.about.AboutFragment"
+        android:label="@string/title_about"
+        tools:layout="@layout/fragment_about" />
+
+    <fragment
+        android:id="@+id/navigation_preview"
+        android:name="com.kudig.kwitansidigital.ui.preview.PreviewFragment"
+        android:label="Preview"
+        tools:layout="@layout/fragment_preview" />
+
+    <fragment
+        android:id="@+id/navigation_device_bluetooth"
+        android:name="com.kudig.kwitansidigital.ui.device.DeviceBluetoothFragment"
+        android:label="Pilih Perangkat Bluetooth"
+        tools:layout="@layout/fragment_device_bluetooth" />
+
+    <fragment
+        android:id="@+id/navigation_history"
+        android:name="com.kudig.kwitansidigital.ui.history.HistoryFragment"
+        android:label="History"
+        tools:layout="@layout/fragment_preview" />
+
+    <fragment
+        android:id="@+id/navigation_privacy_policy"
+        android:name="com.kudig.kwitansidigital.ui.privacy_policy.Privacy_PolicyFragment"
+        android:label="Kebijakan Privasi"
+        tools:layout="@layout/fragment_privacy_policy" />
+
+</navigation>

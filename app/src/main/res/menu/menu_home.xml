@@ -1,0 +1,17 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/menu_item_import_data"
+        android:title="Import Database .CSV" />
+
+    <item
+        android:id="@+id/menu_item_export_data"
+        android:title="Export Database .CSV" />
+
+    <item
+        android:id="@+id/menu_item_info"
+        android:icon="@drawable/ic_info"
+        app:showAsAction="ifRoom" />
+
+</menu>
