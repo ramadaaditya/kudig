@@ -108,10 +108,10 @@ public class KwitansiAdapter extends RecyclerView.Adapter<KwitansiAdapter.MyView
         KwitansiEntity Kwitansi = KwitansiList.get(position);
 
         holder.nomer_Kwitansi.setText(Kwitansi.getNomor());
-        holder.nama_pengirim.setText(Kwitansi.getNama());
-        holder.nama_penerima.setText(Kwitansi.getNama_penerima());
+        holder.nama_pengirim.setText(Kwitansi.getNamaPengirim());
+        holder.nama_penerima.setText(Kwitansi.getNamaPenerima());
 
-        double nominalValue = Double.parseDouble(Kwitansi.getNominal());
+        double nominalValue = Kwitansi.getNominal();
 
         Locale indonesianLocale = new Locale("id", "ID");
         NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance(indonesianLocale);
@@ -150,8 +150,8 @@ public class KwitansiAdapter extends RecyclerView.Adapter<KwitansiAdapter.MyView
                                 EditText editTextDataDeskripsi = editPopupView.findViewById(R.id.edit_text_DataDeskripsi);
 
                                 // Mengisi nilai awal EditText dengan data yang ada di ViewHolder
-                                editTextDataNamaPengirim.setText(KwitansiList.get(holder.getAdapterPosition()).getNama());
-                                editTextDataNamaPenerima.setText(KwitansiList.get(holder.getAdapterPosition()).getNama_penerima());
+                                editTextDataNamaPengirim.setText(KwitansiList.get(holder.getAdapterPosition()).getNamaPengirim());
+                                editTextDataNamaPenerima.setText(KwitansiList.get(holder.getAdapterPosition()).getNamaPenerima());
                                 editTextDataNominal.setText(KwitansiList.get(holder.getAdapterPosition()).getNominal());
                                 editTextDataDeskripsi.setText(KwitansiList.get(holder.getAdapterPosition()).getDeskripsi());
 
@@ -171,8 +171,8 @@ public class KwitansiAdapter extends RecyclerView.Adapter<KwitansiAdapter.MyView
                                         editedDataNamaPenerima = capitalizeWords(editedDataNamaPenerima);
 
                                         // Mengubah nilai data di dalam objek KwitansiEntity
-                                        Kwitansi.setNama(editedDataNama);
-                                        Kwitansi.setNama_penerima(editedDataNamaPenerima);
+                                        Kwitansi.setNamaPengirim(editedDataNama);
+                                        Kwitansi.setNamaPenerima(editedDataNamaPenerima);
                                         Kwitansi.setNominal(editedDataNominal);
                                         Kwitansi.setDeskripsi(editedDataDeskripsi);
 
@@ -228,23 +228,20 @@ public class KwitansiAdapter extends RecyclerView.Adapter<KwitansiAdapter.MyView
             }
         });
 
-        holder.ListKwitansi.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int position = holder.getAdapterPosition();
-                if (position != RecyclerView.NO_POSITION) {
-                    KwitansiEntity kwitansi = KwitansiList.get(position);
+        holder.ListKwitansi.setOnClickListener(v -> {
+            int position = holder.getAdapterPosition();
+            if (position != RecyclerView.NO_POSITION) {
+                KwitansiEntity kwitansi = KwitansiList.get(position);
 
-                    Bundle bundle = new Bundle();
-                    bundle.putString("DataNomor", KwitansiList.get(position).getNomor());
-                    bundle.putString("DataNamaPengirim", KwitansiList.get(position).getNama());
-                    bundle.putString("DataNamaPenerima", KwitansiList.get(position).getNama_penerima());
-                    bundle.putString("DataNominal", KwitansiList.get(position).getNominal());
-                    bundle.putString("DataDeskripsi", KwitansiList.get(position).getDeskripsi());
+                Bundle bundle = new Bundle();
+                bundle.putString("DataNomor", KwitansiList.get(position).getNomor());
+                bundle.putString("DataNamaPengirim", KwitansiList.get(position).getNamaPengirim());
+                bundle.putString("DataNamaPenerima", KwitansiList.get(position).getNamaPenerima());
+                bundle.putString("DataNominal", KwitansiList.get(position).getNominal());
+                bundle.putString("DataDeskripsi", KwitansiList.get(position).getDeskripsi());
 
-                    NavController navController = Navigation.findNavController(v);
-                    navController.navigate(R.id.navigation_preview, bundle);
-                }
+                NavController navController = Navigation.findNavController(v);
+                navController.navigate(R.id.navigation_preview, bundle);
             }
         });
 

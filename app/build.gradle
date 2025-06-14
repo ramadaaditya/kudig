@@ -1,8 +1,8 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.google.gms)
+    alias(libs.plugins.kotlin.android)
 }
-
 
 android {
     namespace 'com.kudig.kwitansidigital'
@@ -10,10 +10,10 @@ android {
 
     defaultConfig {
         applicationId "com.kudig.kwitansidigital"
-        minSdk 24
+        minSdk 26
         targetSdk 34
-        versionCode 3
-        versionName "1.2"
+        versionCode 4
+        versionName "2.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -21,7 +21,8 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
@@ -29,12 +30,6 @@ android {
         sourceCompatibility JavaVersion.VERSION_11
         targetCompatibility JavaVersion.VERSION_11
     }
-
-//    javaCompileOptions {
-//        annotationProcessorOptions {
-//            arguments = ["room.schemaLocation": "$projectDir/schemas"]
-//        }
-//    }
 
     buildFeatures {
         viewBinding true
@@ -46,6 +41,9 @@ android {
         pickFirst 'META-INF/NOTICE.txt'
         pickFirst 'META-INF/*.txt'
         pickFirst 'META-INF/*.md'
+    }
+    kotlinOptions {
+        jvmTarget = '11'
     }
 
 }
@@ -59,9 +57,9 @@ dependencies {
     implementation libs.androidx.navigation.ui
     implementation libs.material
     implementation libs.androidx.room.runtime
+    implementation libs.androidx.core.ktx
     annotationProcessor libs.androidx.room.compiler
     implementation libs.escpos.thermalprinter.android
-    implementation libs.dantsu.escpos.thermalprinter.android
     testImplementation libs.junit
     androidTestImplementation libs.androidx.junit
     androidTestImplementation libs.androidx.espresso.core

@@ -195,9 +195,9 @@ public class HomeFragment extends Fragment {
             for (int i = 0; i < recordsList.size(); i++) {
                 fileWriter.append("" + recordsList.get(i).getNomor());
                 fileWriter.append(",");
-                fileWriter.append("" + recordsList.get(i).getNama());
+                fileWriter.append("" + recordsList.get(i).getNamaPengirim());
                 fileWriter.append(",");
-                fileWriter.append("" + recordsList.get(i).getNama_penerima());
+                fileWriter.append("" + recordsList.get(i).getNamaPenerima());
                 fileWriter.append(",");
                 fileWriter.append("" + recordsList.get(i).getNominal());
                 fileWriter.append(",");

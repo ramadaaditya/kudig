@@ -5,54 +5,43 @@ import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
-@Entity(tableName = "Kwitansi")
-public class KwitansiEntity {
+import java.io.Serializable;
 
-    @ColumnInfo(name = "kwitansi_id")
+@Entity(tableName = "Kwitansi")
+public class KwitansiEntity implements Serializable {
     @PrimaryKey(autoGenerate = true)
-    int id;
+    @ColumnInfo(name = "kwitansi_id")
+    private int id;
     @ColumnInfo(name = "nomor")
-    String nomor;
-    @ColumnInfo(name = "nama")
-    String nama;
+    private String nomor;
+    @ColumnInfo(name = "nama_pengirim")
+    private String namaPengirim;
 
     @ColumnInfo(name = "nama_penerima")
-    String nama_penerima;
+    private String namaPenerima;
 
     @ColumnInfo(name = "nominal")
-    String nominal;
+    private long nominal;
 
     @ColumnInfo(name = "deskripsi")
-    String deskripsi;
+    private String deskripsi;
 
-    public KwitansiEntity(String nomor, String nama, String nama_penerima, String nominal, String deskripsi) {
+    public KwitansiEntity(int id, String nomor, String namaPengirim, String namaPenerima, long nominal, String deskripsi) {
+        this.id = id;
         this.nomor = nomor;
-        this.nama = nama;
-        this.nama_penerima = nama_penerima;
+        this.namaPengirim = namaPengirim;
+        this.namaPenerima = namaPenerima;
         this.nominal = nominal;
         this.deskripsi = deskripsi;
-        this.id = 0;
     }
 
     @Ignore
-    public KwitansiEntity(String history_nomor, String history_Pengirim, String history_Penerima, double history_nominal, String history_deskripsi) {
-
-    }
-
-    public String getNomor() {
-        return nomor;
-    }
-
-    public void setNomor(String nomor) {
+    public KwitansiEntity(String nomor, String namaPengirim, String namaPenerima, long nominal, String deskripsi) {
         this.nomor = nomor;
-    }
-
-    public String getNama() {
-        return nama;
-    }
-
-    public void setNama(String nama) {
-        this.nama = nama;
+        this.namaPengirim = namaPengirim;
+        this.namaPenerima = namaPenerima;
+        this.nominal = nominal;
+        this.deskripsi = deskripsi;
     }
 
     public int getId() {
@@ -63,19 +52,36 @@ public class KwitansiEntity {
         this.id = id;
     }
 
-    public String getNama_penerima() {
-        return nama_penerima;
+    public String getNomor() {
+        return nomor;
     }
 
-    public void setNama_penerima(String nama_penerima) {
-        this.nama_penerima = nama_penerima;
+    public void setNomor(String nomor) {
+        this.nomor = nomor;
     }
 
-    public String getNominal() {
+    public String getNamaPengirim() {
+        return namaPengirim;
+    }
+
+    public void setNamaPengirim(String namaPengirim) {
+        this.namaPengirim = namaPengirim;
+    }
+
+
+    public String getNamaPenerima() {
+        return namaPenerima;
+    }
+
+    public void setNamaPenerima(String namaPenerima) {
+        this.namaPenerima = namaPenerima;
+    }
+
+    public long getNominal() {
         return nominal;
     }
 
-    public void setNominal(String nominal) {
+    public void setNominal(long nominal) {
         this.nominal = nominal;
     }
 
@@ -86,6 +92,4 @@ public class KwitansiEntity {
     public void setDeskripsi(String deskripsi) {
         this.deskripsi = deskripsi;
     }
-
-
 }

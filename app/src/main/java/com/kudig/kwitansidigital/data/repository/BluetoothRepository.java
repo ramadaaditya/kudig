@@ -28,17 +28,15 @@ import java.util.UUID;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-// BluetoothRepository bertanggung jawab untuk semua interaksi langsung dengan API Bluetooth.
-// Ia mengisolasi detail implementasi dari ViewModel.
 public class BluetoothRepository {
 
     private static final String TAG = "BluetoothRepository";
-    private static final UUID PRINTER_SERVICE_UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB"); // UUID standar untuk SPP
+    private static final UUID PRINTER_SERVICE_UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
 
     private final Context context;
     private final BluetoothAdapter bluetoothAdapter;
-    private final ExecutorService executorService; // Untuk operasi I/O di background thread
-    private final Handler mainHandler; // Untuk posting hasil kembali ke UI thread
+    private final ExecutorService executorService;
+    private final Handler mainHandler;
 
     private final MutableLiveData<List<BluetoothDevice>> _discoveredDevices = new MutableLiveData<>(new ArrayList<>());
 
@@ -52,7 +50,7 @@ public class BluetoothRepository {
         return _bluetoothEnabledStatus;
     }
 
-    private final MutableLiveData<String> _pairingStatus = new MutableLiveData<>(); // "PAIRING", "BONDED", "NONE"
+    private final MutableLiveData<String> _pairingStatus = new MutableLiveData<>();
 
     public LiveData<String> getPairingStatus() {
         return _pairingStatus;
@@ -195,7 +193,7 @@ public class BluetoothRepository {
         }
 
         List<BluetoothDevice> currentList = new ArrayList<>();
-        if (pairedDevices != null && pairedDevices.size() > 0) {
+        if (pairedDevices != null && !pairedDevices.isEmpty()) {
             currentList.addAll(pairedDevices);
         }
         _discoveredDevices.postValue(currentList); // Update LiveData dengan perangkat yang sudah dipasangkan

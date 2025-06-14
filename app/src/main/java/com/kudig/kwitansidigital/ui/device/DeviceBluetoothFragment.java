@@ -30,7 +30,6 @@ import com.kudig.kwitansidigital.databinding.FragmentDeviceBluetoothBinding;
 import java.util.ArrayList;
 
 public class DeviceBluetoothFragment extends Fragment {
-    private FragmentDeviceBluetoothBinding binding;
     private DeviceBluetoothViewModel viewModel;
     private ArrayList<BluetoothDevice> deviceList;
     private ArrayAdapter<BluetoothDevice> adapter;
@@ -62,7 +61,7 @@ public class DeviceBluetoothFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        // Menggunakan View Binding untuk meng-inflate layout
+        FragmentDeviceBluetoothBinding binding;
         binding = FragmentDeviceBluetoothBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
 

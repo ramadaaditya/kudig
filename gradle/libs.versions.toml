@@ -1,7 +1,6 @@
 [versions]
 appcompat = "1.7.1"
-escposThermalprinterAndroid = "3.3.0"
-escposThermalprinterAndroidVersion = "master-SNAPSHOT"
+escposThermalprinterAndroid = "3.4.0"
 espressoCore = "3.6.1"
 itextpdf = "5.5.13.4"
 junit = "4.13.2"
@@ -19,6 +18,8 @@ swiperefreshlayout = "1.1.0"
 terbilang = "0.1"
 androidGradlePlugin = "8.10.1"
 gms = '4.4.2'
+kotlin = "2.1.10"
+coreKtx = "1.16.0"
 
 
 [libraries]
@@ -33,15 +34,16 @@ androidx-constraintlayout = { module = "androidx.constraintlayout:constraintlayo
 androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "roomCompiler" }
 androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "roomRuntime" }
 androidx-swiperefreshlayout = { module = "androidx.swiperefreshlayout:swiperefreshlayout", version.ref = "swiperefreshlayout" }
-dantsu-escpos-thermalprinter-android = { module = "com.github.DantSu:ESCPOS-ThermalPrinter-Android", version.ref = "escposThermalprinterAndroidVersion" }
 escpos-thermalprinter-android = { module = "com.github.DantSu:ESCPOS-ThermalPrinter-Android", version.ref = "escposThermalprinterAndroid" }
 itextpdf = { module = "com.itextpdf:itextpdf", version.ref = "itextpdf" }
 junit = { module = "junit:junit", version.ref = "junit" }
 material = { module = "com.google.android.material:material", version.ref = "material" }
 opencsv = { module = "com.opencsv:opencsv", version.ref = "opencsv" }
 terbilang = { module = "com.wendyliga:terbilang", version.ref = "terbilang" }
+androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 
 [plugins]
 android-application = { id = 'com.android.application', version.ref = 'androidGradlePlugin' }
 android-library = { id = 'com.android.library', version.ref = 'androidGradlePlugin' }
 google-gms = { id = 'com.google.gms.google-services', version.ref = 'gms' }
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
