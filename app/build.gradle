@@ -1,6 +1,6 @@
 plugins {
-    id 'com.android.application'
-    id 'com.google.gms.google-services'
+    alias(libs.plugins.android.application)
+    alias(libs.plugins.google.gms)
 }
 
 
@@ -41,44 +41,32 @@ android {
     }
 
     packagingOptions {
-        // Instruksikan Gradle untuk mengambil salinan pertama dari file-file ini jika ada duplikasi.
-        // Ini adalah solusi paling umum untuk error "Duplicate file".
         pickFirst 'META-INF/LICENSE.md'
-        pickFirst 'META-INF/LICENSE.txt' // Seringkali ada duplikasi ini juga, tambahkan sebagai jaga-jaga
-        pickFirst 'META-INF/NOTICE.txt' // Dan ini juga
-        pickFirst 'META-INF/*.txt'      // Bisa juga menggunakan wildcard jika banyak file .txt
-        pickFirst 'META-INF/*.md'       // Atau wildcard untuk .md
+        pickFirst 'META-INF/LICENSE.txt'
+        pickFirst 'META-INF/NOTICE.txt'
+        pickFirst 'META-INF/*.txt'
+        pickFirst 'META-INF/*.md'
     }
 
 }
 
 dependencies {
-    implementation 'androidx.appcompat:appcompat:1.7.1'
-    implementation 'com.google.android.material:material:1.12.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.2.1'
-    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.9.1'
-    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.9.1'
-    implementation 'androidx.navigation:navigation-fragment:2.9.0'
-    implementation 'androidx.navigation:navigation-ui:2.9.0'
-    implementation 'com.google.android.material:material:1.12.0'
-    implementation 'com.google.android.material:material:1.12.0'
-
-    implementation 'androidx.room:room-runtime:2.7.1'
-//    implementation 'com.google.android.gms:play-services-ads:22.1.0'
-    annotationProcessor 'androidx.room:room-compiler:2.7.1'
-
-    implementation 'com.github.DantSu:ESCPOS-ThermalPrinter-Android:3.3.0'
-    implementation 'com.github.DantSu:ESCPOS-ThermalPrinter-Android:master-SNAPSHOT'
-
-    testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test.ext:junit:1.2.1'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.6.1'
-
-    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
-
-    implementation 'com.wendyliga:terbilang:0.1'
-
-    implementation 'com.itextpdf:itextpdf:5.5.13.4'
-
-    implementation 'com.opencsv:opencsv:5.11.1'
+    implementation libs.androidx.appcompat
+    implementation libs.androidx.constraintlayout
+    implementation libs.androidx.lifecycle.livedata.ktx
+    implementation libs.androidx.lifecycle.viewmodel.ktx
+    implementation libs.androidx.navigation.fragment
+    implementation libs.androidx.navigation.ui
+    implementation libs.material
+    implementation libs.androidx.room.runtime
+    annotationProcessor libs.androidx.room.compiler
+    implementation libs.escpos.thermalprinter.android
+    implementation libs.dantsu.escpos.thermalprinter.android
+    testImplementation libs.junit
+    androidTestImplementation libs.androidx.junit
+    androidTestImplementation libs.androidx.espresso.core
+    implementation libs.androidx.swiperefreshlayout
+    implementation libs.terbilang
+    implementation libs.itextpdf
+    implementation libs.opencsv
 }
